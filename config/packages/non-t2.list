@@ -1,0 +1,24 @@
+# ============================================================
+# Non-T2 Mac packages (2012–2017 models)
+# ============================================================
+# Split into two eras:
+#   2012-2015: USB keyboard/trackpad — works out of box
+#   2016-2017: SPI keyboard/trackpad — needs applespi driver
+#
+# We include everything for both eras so one ISO covers all.
+# ============================================================
+
+# --- GPU Switching (dual-GPU MacBooks) ---
+mesa-utils
+
+# --- SPI keyboard/trackpad (2016-2017 MacBook Pro/12" MacBook) ---
+# These models use Apple SPI instead of USB for internal
+# keyboard and trackpad. The applespi driver handles this.
+# NOTE: applespi may be in mainline kernel 5.17+, but we
+# ensure the support modules are loaded via initramfs config.
+# The inject script will set up initramfs modules for:
+#   applespi, intel_lpss_pci, spi_pxa2xx_platform
+
+# --- Touch Bar (2016-2017 MacBook Pro with Touch Bar) ---
+# apple-ibridge / apple-ib-tb handles the Touch Bar
+# NOTE: Installed from source/DKMS in inject script if needed
