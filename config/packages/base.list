@@ -1,0 +1,49 @@
+# ============================================================
+# Base packages — installed on ALL Mac profiles
+# ============================================================
+# These packages provide fundamental hardware support that
+# every Intel Mac (2012-2020) running Ubuntu will need.
+# ============================================================
+
+# --- WiFi (Broadcom) — THE #1 ISSUE ---
+# Every Intel Mac uses Broadcom WiFi. Without these, no internet.
+# broadcom-sta provides the 'wl' driver which supports:
+#   BCM4331 (2012), BCM4360 (2013-2014), BCM43602 (2015-2017),
+#   BCM4350 (12" MacBook), BCM4364 (2018-2020 T2)
+broadcom-sta-dkms
+bcmwl-kernel-source
+
+# --- DKMS (Dynamic Kernel Module Support) ---
+# Ensures all out-of-tree drivers rebuild on kernel updates
+dkms
+
+# --- Firmware ---
+# Comprehensive firmware blobs for Broadcom WiFi/BT and other hw
+linux-firmware
+
+# --- Bluetooth ---
+# Broadcom Bluetooth needs firmware + bluez stack
+bluez
+bluez-tools
+
+# --- Fan Control ---
+# MacBooks run fans at full speed without this
+# Reads temps via applesmc, controls fans accordingly
+mbpfan
+
+# --- Power Management ---
+powertop
+thermald
+
+# --- Build essentials ---
+# Required for DKMS to compile kernel modules on updates
+build-essential
+linux-headers-generic
+
+# --- Sensor & hardware tools ---
+lm-sensors
+pciutils
+usbutils
+
+# --- Suspend/Resume helpers ---
+pm-utils

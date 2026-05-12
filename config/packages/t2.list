@@ -1,0 +1,23 @@
+# ============================================================
+# T2 Mac packages (2018–2020 Intel models)
+# ============================================================
+# The T2 security chip controls keyboard, trackpad, audio,
+# and storage on these Macs. Without apple-bce, none of
+# these work. The T2 packages come from the t2linux.org
+# community repository.
+# ============================================================
+
+# --- T2 Core Driver ---
+# NOTE: apple-bce-dkms is installed from the t2linux repo
+# which is added during the inject-drivers.sh step.
+# This file documents the intent; actual install is handled
+# by the inject script which adds the apt repository first.
+
+# Packages to install from t2linux repo:
+# apple-bce-dkms        — keyboard, trackpad, audio, SSD
+# apple-t2-audio-config — PipeWire/PulseAudio routing for T2
+# apple-touchbar-dkms   — Touch Bar support (if applicable)
+
+# --- Additional T2 support ---
+mesa-utils
+

@@ -1,0 +1,18 @@
+# ============================================================
+# Apple Trackpad — udev rules for better trackpad behavior
+# ============================================================
+# MacBook trackpads are excellent hardware, but Linux defaults
+# can feel sluggish or imprecise. These udev rules apply
+# optimized libinput settings automatically.
+# ============================================================
+
+# Apple Internal Trackpad — enable natural scrolling, tap-to-click
+ACTION=="add|change", KERNEL=="event*", ATTRS{name}=="*Apple*trackpad*", \
+    ENV{LIBINPUT_ATTR_TOUCH_SIZE_RANGE}="40:20", \
+    ENV{LIBINPUT_ATTR_PALM_SIZE_THRESHOLD}="800"
+
+# Apple Magic Trackpad (external, via Bluetooth or USB)
+ACTION=="add|change", KERNEL=="event*", ATTRS{name}=="*Magic Trackpad*", \
+    ENV{LIBINPUT_ATTR_TOUCH_SIZE_RANGE}="40:20", \
+    ENV{LIBINPUT_ATTR_PALM_SIZE_THRESHOLD}="800"
+
