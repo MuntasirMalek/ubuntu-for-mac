@@ -76,7 +76,19 @@ These Macs have Apple's T2 security chip, which requires additional community dr
 
 ### Step 1: Download the ISO
 
-Go to the [**Releases**](../../releases) page and download the latest `ubuntu-xx.xx-desktop-amd64-mac-edition.iso` file.
+**Easiest way — one command:** Open Terminal and paste this:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/MuntasirMalek/ubuntu-for-mac/main/download.sh | bash
+```
+
+This will automatically download the ISO, combine all parts, verify the checksum, and give you the final `.iso` file. No technical knowledge needed — just wait for it to finish.
+
+**Or manually:** Go to the [**Releases**](../../releases) page, download all `.part.*` files, and combine them:
+
+```bash
+cat ubuntu-26.04-desktop-amd64-mac-edition.part.* > ubuntu-26.04-desktop-amd64-mac-edition.iso
+```
 
 ### Step 2: Flash the ISO to USB
 
