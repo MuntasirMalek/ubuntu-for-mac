@@ -1,7 +1,7 @@
 <p align="center">
   <img src="assets/ubuntu-logo.png" alt="Ubuntu" height="80"/>
   &nbsp;&nbsp;
-  <b>+</b>
+  <img src="assets/plus.svg" alt="+" height="30"/>
   &nbsp;&nbsp;
   <img src="assets/apple-logo.png" alt="Apple" height="80"/>
 </p>
