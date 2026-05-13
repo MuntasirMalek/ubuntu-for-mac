@@ -37,11 +37,6 @@ curl -fsSL https://raw.githubusercontent.com/MuntasirMalek/ubuntu-for-mac/main/d
 
 That's it — it downloads everything, combines the files, and verifies the checksum for you.
 
-> **Or manually:** Go to [Releases](../../releases), download all `.part.*` files, then run:
-> ```bash
-> cat ubuntu-26.04-desktop-amd64-mac-edition.part.* > ubuntu-26.04-desktop-amd64-mac-edition.iso
-> ```
-
 ### Step 2: Flash to USB
 
 **Easiest way** — use [balenaEtcher](https://etcher.balena.io/) (free):
