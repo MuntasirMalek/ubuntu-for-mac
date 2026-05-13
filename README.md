@@ -1,7 +1,9 @@
 <p align="center">
-  <img src="assets/ubuntu-logo.png" alt="Ubuntu" width="80" style="vertical-align:middle;"/>
-  <img src="https://img.shields.io/badge/+-black?style=flat-square&labelColor=white&color=white" height="20" style="vertical-align:middle;"/>
-  <img src="assets/apple-logo.png" alt="Apple" width="80" style="vertical-align:middle;"/>
+  <img src="assets/ubuntu-logo.png" alt="Ubuntu" height="80"/>
+  &nbsp;&nbsp;
+  <b>+</b>
+  &nbsp;&nbsp;
+  <img src="assets/apple-logo.png" alt="Apple" height="80"/>
 </p>
 
 <h1 align="center">Ubuntu for Mac</h1>
