@@ -1,9 +1,3 @@
-<p align="center">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Logo-ubuntu_cof-orange-hex.svg/120px-Logo-ubuntu_cof-orange-hex.svg.png" alt="Ubuntu" width="80"/>
-  &nbsp;&nbsp;&nbsp;+&nbsp;&nbsp;&nbsp;
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/80px-Apple_logo_black.svg.png" alt="Apple" width="50"/>
-</p>
-
 <h1 align="center">Ubuntu for Mac</h1>
 
 <p align="center">
