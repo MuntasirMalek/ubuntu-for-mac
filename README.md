@@ -1,9 +1,5 @@
 <p align="center">
-  <img src="assets/ubuntu-logo.png" alt="Ubuntu" height="80"/>
-  &nbsp;&nbsp;
-  <img src="assets/plus.svg" alt="+" height="30"/>
-  &nbsp;&nbsp;
-  <img src="assets/apple-logo.png" alt="Apple" height="80"/>
+  <img src="assets/banner.png" alt="Ubuntu + Apple" width="200"/>
 </p>
 
 <h1 align="center">Ubuntu for Mac</h1>
