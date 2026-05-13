@@ -10,32 +10,99 @@
 </p>
 
 <p align="center">
-  <a href="#-which-macs-are-supported">Supported Macs</a> •
-  <a href="#-quick-start-install-ubuntu-on-your-mac">Quick Start</a> •
-  <a href="#️-build-your-own-iso">Build Your Own</a> •
+  <a href="#-quick-start">Quick Start</a> •
+  <a href="#-supported-macs">Supported Macs</a> •
   <a href="#-dual-boot-with-macos">Dual Boot</a> •
+  <a href="#️-build-your-own-iso">Build Your Own</a> •
   <a href="#-troubleshooting">Troubleshooting</a>
 </p>
 
 ---
 
-## 🤔 What is this?
+## 🚀 Quick Start
 
-If you've ever tried to install regular Ubuntu on a MacBook, you know the pain:
-- ❌ **WiFi doesn't work** (Broadcom chips need proprietary drivers)
-- ❌ **Keyboard/trackpad don't work** on 2016-2017 models (they use Apple SPI, not USB)
-- ❌ **Fans spin at full speed** (no temperature control)
-- ❌ **No function key mapping** (brightness, volume keys don't work right)
+### What you need
 
-**This project fixes all of that.** We take a standard Ubuntu ISO and inject every driver your Mac needs, so when you boot the installer, **everything just works** — even WiFi during installation.
+- An **Intel Mac** (2012–2020)
+- A **USB flash drive** (8 GB or bigger)
+- About **30 minutes**
+
+### Step 1: Download the ISO
+
+Open **Terminal** and paste this one command:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/MuntasirMalek/ubuntu-for-mac/main/download.sh | bash
+```
+
+That's it — it downloads everything, combines the files, and verifies the checksum for you.
+
+> **Or manually:** Go to [Releases](../../releases), download all `.part.*` files, then run:
+> ```bash
+> cat ubuntu-26.04-desktop-amd64-mac-edition.part.* > ubuntu-26.04-desktop-amd64-mac-edition.iso
+> ```
+
+### Step 2: Flash to USB
+
+**Easiest way** — use [balenaEtcher](https://etcher.balena.io/) (free):
+1. Open it, select the ISO
+2. Select your USB drive
+3. Click **Flash!**
+
+**Or use Terminal:**
+
+```bash
+# Find your USB drive
+diskutil list
+
+# Unmount it (replace disk2 with yours)
+diskutil unmountDisk /dev/disk2
+
+# Flash (replace rdisk2 with yours — the 'r' makes it faster)
+sudo dd if=ubuntu-26.04-desktop-amd64-mac-edition.iso of=/dev/rdisk2 bs=4m status=progress
+
+# Eject
+diskutil eject /dev/disk2
+```
+
+> ⚠️ **Be careful with `diskutil list`.** Pick the disk that matches your USB drive's size. Wrong disk = wrong drive erased.
+
+### Step 3: Boot from USB
+
+1. **Shut down** your Mac
+2. **Plug in** the USB drive
+3. **Turn on** while holding **Option (⌥)**
+4. Select the **EFI Boot** drive
+5. Ubuntu loads!
+
+### Step 4: Install
+
+1. Click **"Try Ubuntu"** first to test WiFi, keyboard, trackpad
+2. When ready, double-click **"Install Ubuntu"** on the desktop
+3. Follow the installer:
+   - Pick your language
+   - Connect to WiFi (it works!)
+   - Choose your install type (see [Dual Boot](#-dual-boot-with-macos) if keeping macOS)
+   - Set your name and password
+4. Reboot — done! 🎉
+
+### Step 5: Verify hardware
+
+After install, open Terminal and run:
+
+```bash
+sudo ubuntu-mac-setup
+```
+
+It checks WiFi, keyboard, trackpad, audio, fans — tells you if everything is working.
 
 ---
 
-## 💻 Which Macs are supported?
+## 💻 Supported Macs
 
-**All Intel MacBooks from 2012 to 2020.** Here's what's included:
+**All Intel Macs from 2012 to 2020.**
 
-### ✅ Fully Supported (2012–2017)
+### ✅ Full Support (2012–2017)
 
 | Mac Model | Year | WiFi | Keyboard | Trackpad | Audio | Fans |
 |-----------|------|------|----------|----------|-------|------|
@@ -54,112 +121,24 @@ If you've ever tried to install regular Ubuntu on a MacBook, you know the pain:
 
 ### ⚠️ Partial Support (2018–2020 T2 Macs)
 
-These Macs have Apple's T2 security chip, which requires additional community drivers that are not yet available for Ubuntu 26.04. **WiFi and fan control will work**, but internal keyboard/trackpad may require an external USB keyboard during installation. Check [t2linux.org](https://t2linux.org/) for updates.
+WiFi and fan control work. Internal keyboard/trackpad may need an external USB keyboard during install. Check [t2linux.org](https://t2linux.org/) for updates.
 
 ### ❌ Not Supported
 
-- Apple Silicon Macs (M1, M2, M3, M4) — these use ARM, not Intel
+- Apple Silicon (M1/M2/M3/M4) — ARM, not Intel
 - Macs older than 2012
 
 ---
 
-## 🚀 Quick Start: Install Ubuntu on your Mac
+## 🤔 What is this?
 
-### What you need
+If you've ever installed regular Ubuntu on a Mac, you know the pain:
+- ❌ **WiFi doesn't work** (Broadcom chips need proprietary drivers)
+- ❌ **Keyboard/trackpad don't work** on 2016-2017 models (they use Apple SPI, not USB)
+- ❌ **Fans spin at full speed** (no temperature control)
+- ❌ **No function key mapping** (brightness, volume keys don't work)
 
-- A **Mac** from the supported list above
-- A **USB flash drive** (at least 8 GB)
-- The **custom ISO** (download from [Releases](../../releases))
-- About **30 minutes** of time
-
-### Step 1: Download the ISO
-
-**Easiest way — one command:** Open Terminal and paste this:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/MuntasirMalek/ubuntu-for-mac/main/download.sh | bash
-```
-
-This will automatically download the ISO, combine all parts, verify the checksum, and give you the final `.iso` file. No technical knowledge needed — just wait for it to finish.
-
-**Or manually:** Go to the [**Releases**](../../releases) page, download all `.part.*` files, and combine them:
-
-```bash
-cat ubuntu-26.04-desktop-amd64-mac-edition.part.* > ubuntu-26.04-desktop-amd64-mac-edition.iso
-```
-
-### Step 2: Flash the ISO to USB
-
-#### On macOS (using Terminal)
-
-1. **Plug in your USB drive**
-
-2. **Find your USB drive name:**
-   ```bash
-   diskutil list
-   ```
-   Look for your USB drive — it will be something like `/dev/disk2` or `/dev/disk3`.
-   It's usually the one matching your USB drive's size.
-
-   > ⚠️ **Be very careful here.** Picking the wrong disk will erase the wrong drive!
-
-3. **Unmount the USB drive:**
-   ```bash
-   diskutil unmountDisk /dev/disk2
-   ```
-   *(Replace `disk2` with your actual disk number)*
-
-4. **Flash the ISO:**
-   ```bash
-   sudo dd if=ubuntu-26.04-desktop-amd64-mac-edition.iso of=/dev/rdisk2 bs=4m status=progress
-   ```
-   *(Replace `rdisk2` with your actual disk number — note the `r` prefix makes it faster)*
-
-   This will take 5-10 minutes. Wait for it to finish.
-
-5. **Eject:**
-   ```bash
-   diskutil eject /dev/disk2
-   ```
-
-#### On macOS (using balenaEtcher — easier)
-
-1. Download [**balenaEtcher**](https://etcher.balena.io/) — it's free
-2. Open it, select the ISO file
-3. Select your USB drive
-4. Click **Flash!**
-
-That's it.
-
-### Step 3: Boot from USB
-
-1. **Shut down** your Mac completely
-2. **Plug in** the USB drive
-3. **Turn on** your Mac while holding the **Option (⌥) key**
-4. You'll see a boot menu — select the orange/yellow **EFI Boot** drive
-5. Ubuntu will start loading!
-
-### Step 4: Install Ubuntu
-
-Once Ubuntu boots from the USB, you have two choices:
-
-#### Option A: Try Ubuntu first (recommended)
-- Click **"Try Ubuntu"** to use it without installing
-- Test that WiFi, keyboard, and trackpad work
-- When ready, double-click the **"Install Ubuntu"** icon on the desktop
-
-#### Option B: Install directly
-- Click **"Install Ubuntu"**
-- Follow the installer
-
-#### During installation:
-- **Language:** Pick your language
-- **Keyboard:** Usually detected automatically
-- **WiFi:** Connect to your WiFi network (it should work!)
-- **Installation type:** See the [Dual Boot section](#-dual-boot-with-macos) below
-- **Your info:** Set your name, username, and password
-
-That's it! Reboot and enjoy Ubuntu on your Mac. 🎉
+**This project fixes all of that.** We take a standard Ubuntu ISO and inject every driver your Mac needs, so when you boot the installer, **everything just works** — even WiFi during installation.
 
 ---
 
@@ -190,12 +169,6 @@ Want to keep macOS AND have Ubuntu? Here's how.
 6. Click **Install**
 
 ### After installation
-
-- **OpenCore** will remain your primary bootloader
-- To boot Ubuntu: Hold **Option (⌥)** at startup and select the Ubuntu drive
-- To boot macOS: Just restart normally (OpenCore handles it)
-
-### Switching between macOS and Ubuntu
 
 | To boot... | Do this... |
 |------------|-----------|
@@ -239,8 +212,6 @@ When it's done, you'll find `ubuntu-26.04-desktop-amd64-mac-edition.iso` in the 
 
 ### Build profiles
 
-You can build for specific Mac types to reduce ISO size:
-
 ```bash
 # All Macs (default — recommended)
 ./build.sh ubuntu-26.04-desktop-amd64.iso
@@ -250,97 +221,6 @@ You can build for specific Mac types to reduce ISO size:
 
 # Only 2018-2020 Macs (T2 chip)
 ./build.sh ubuntu-26.04-desktop-amd64.iso t2
-```
-
----
-
-## 🔧 What's inside the ISO?
-
-Here's exactly what we add to the standard Ubuntu ISO:
-
-### Drivers
-
-| Driver | What it does | Mac Models |
-|--------|-------------|------------|
-| `broadcom-sta-dkms` | **WiFi** — Broadcom wl driver | All Intel Macs |
-| `applespi` | **Keyboard & trackpad** via SPI | 2016-2017 MacBooks |
-| `hid-apple` config | **Function keys** work as F1-F12 | All Macs |
-| `mbpfan` | **Fan control** — stops fans spinning at max | All MacBooks |
-| `apple-gmux` config | **GPU switching** for dual-GPU MacBooks | 15" MacBook Pros |
-| `apple-hda` config | **Audio** fix for Cirrus Logic codec | All Macs |
-| `apple-nvme` config | **SSD suspend** fix for Apple NVMe | 2015+ Macs |
-
-### Packages installed
-
-| Package | Purpose |
-|---------|---------|
-| `broadcom-sta-dkms` | Broadcom WiFi driver |
-| `bcmwl-kernel-source` | WiFi kernel module source |
-| `dkms` | Auto-rebuilds drivers on kernel updates |
-| `build-essential` | Compiler toolchain for DKMS |
-| `linux-headers-generic` | Kernel headers for DKMS |
-| `linux-firmware` | Firmware blobs |
-| `bluez`, `bluez-tools` | Bluetooth stack |
-| `mbpfan` | Fan control daemon |
-| `powertop` | Battery optimization |
-| `thermald` | Thermal management |
-| `lm-sensors` | Temperature monitoring |
-| `mesa-utils` | GPU diagnostics |
-
-### Config files
-
-| File | Location | Purpose |
-|------|----------|---------|
-| `broadcom-wl.conf` | `/etc/modprobe.d/` | Blacklists conflicting WiFi drivers |
-| `hid-apple.conf` | `/etc/modprobe.d/` | F1-F12 default, key mapping |
-| `apple-gmux.conf` | `/etc/modprobe.d/` | Uses integrated GPU by default |
-| `apple-hda.conf` | `/etc/modprobe.d/` | Audio codec hint |
-| `applespi.conf` | `/etc/modprobe.d/` | SPI keyboard driver dependencies |
-| `apple-nvme.conf` | `/etc/modprobe.d/` | NVMe suspend/resume fix |
-| `mbpfan.conf` | `/etc/` | Fan speed curves |
-| `99-apple-trackpad.rules` | `/etc/udev/rules.d/` | Trackpad palm rejection & tuning |
-
----
-
-## ✅ After Installation: Verify Everything Works
-
-After installing Ubuntu, open a terminal and run:
-
-```bash
-sudo ubuntu-mac-setup
-```
-
-This runs a diagnostic that checks all your Mac hardware:
-
-```
-  Ubuntu Mac Setup — Post-Install Check
-  ─────────────────────────────────────
-
-  Mac model: MacBookPro11,5
-
-  1. WiFi
-    ✓ WiFi driver (wl/broadcom-sta) loaded — interface: wlp4s0
-
-  2. Bluetooth
-    ✓ Bluetooth service running
-    ✓ Bluetooth adapter is UP
-
-  3. Keyboard
-    ✓ Apple keyboard driver (hid-apple) loaded
-    ✓ Function key mode: 2 (F-keys default)
-
-  4. Trackpad
-    ✓ Trackpad detected by libinput
-
-  5. Audio
-    ✓ Intel HDA audio driver loaded
-    ✓ Audio output device found
-
-  6. Fan Control
-    ✓ mbpfan is running
-    ✓ CPU temperature: 52°C
-
-  Setup check complete!
 ```
 
 ---
@@ -423,11 +303,63 @@ brightnessctl set 50%
 
 ---
 
+## 🔧 What's inside the ISO?
+
+<details>
+<summary><strong>Click to see all drivers, packages, and config files</strong></summary>
+
+### Drivers
+
+| Driver | What it does | Mac Models |
+|--------|-------------|------------|
+| `broadcom-sta-dkms` | **WiFi** — Broadcom wl driver | All Intel Macs |
+| `applespi` | **Keyboard & trackpad** via SPI | 2016-2017 MacBooks |
+| `hid-apple` config | **Function keys** work as F1-F12 | All Macs |
+| `mbpfan` | **Fan control** — stops fans spinning at max | All MacBooks |
+| `apple-gmux` config | **GPU switching** for dual-GPU MacBooks | 15" MacBook Pros |
+| `apple-hda` config | **Audio** fix for Cirrus Logic codec | All Macs |
+| `apple-nvme` config | **SSD suspend** fix for Apple NVMe | 2015+ Macs |
+
+### Packages installed
+
+| Package | Purpose |
+|---------|---------|
+| `broadcom-sta-dkms` | Broadcom WiFi driver |
+| `bcmwl-kernel-source` | WiFi kernel module source |
+| `dkms` | Auto-rebuilds drivers on kernel updates |
+| `build-essential` | Compiler toolchain for DKMS |
+| `linux-headers-generic` | Kernel headers for DKMS |
+| `linux-firmware` | Firmware blobs |
+| `bluez`, `bluez-tools` | Bluetooth stack |
+| `mbpfan` | Fan control daemon |
+| `powertop` | Battery optimization |
+| `thermald` | Thermal management |
+| `lm-sensors` | Temperature monitoring |
+| `mesa-utils` | GPU diagnostics |
+
+### Config files
+
+| File | Location | Purpose |
+|------|----------|---------|
+| `broadcom-wl.conf` | `/etc/modprobe.d/` | Blacklists conflicting WiFi drivers |
+| `hid-apple.conf` | `/etc/modprobe.d/` | F1-F12 default, key mapping |
+| `apple-gmux.conf` | `/etc/modprobe.d/` | Uses integrated GPU by default |
+| `apple-hda.conf` | `/etc/modprobe.d/` | Audio codec hint |
+| `applespi.conf` | `/etc/modprobe.d/` | SPI keyboard/trackpad dependencies |
+| `apple-nvme.conf` | `/etc/modprobe.d/` | NVMe suspend/resume fix |
+| `mbpfan.conf` | `/etc/` | Fan speed curves |
+| `99-apple-trackpad.rules` | `/etc/udev/rules.d/` | Trackpad palm rejection & tuning |
+
+</details>
+
+---
+
 ## 📁 Project Structure
 
 ```
 ubuntu-for-mac/
 ├── build.sh                     # Main build script (start here)
+├── download.sh                  # One-command ISO downloader
 ├── Dockerfile                   # Docker build environment
 ├── README.md                    # You are here
 ├── config/
