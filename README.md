@@ -37,21 +37,24 @@ curl -fsSL https://raw.githubusercontent.com/MuntasirMalek/ubuntu-for-mac/main/d
 
 That's it — it downloads everything, combines the files, and verifies the checksum for you.
 
-### Step 2: Flash to a USB stick
+### Step 2: Create the installer
 
-You need a **separate USB flash drive** (8 GB+) just for the installer. This is temporary.
+Pick whichever option fits your setup:
 
-> ⚠️ **Flashing erases the ENTIRE USB drive.** Don't use a drive with data you need. If you have an external hard drive with multiple partitions, do NOT flash to it — use a separate USB stick instead.
+#### Option A: I have a spare USB stick (easiest)
 
-**Easiest way** — [balenaEtcher](https://etcher.balena.io/) (free):
+If you have a separate USB flash drive (8 GB+), this is the simplest way.
+
+> ⚠️ **This erases the ENTIRE USB stick.** Don't use one with data you need.
+
+**Using [balenaEtcher](https://etcher.balena.io/) (free):**
 1. Open it, select the ISO
-2. Select your USB **flash drive** (not your external hard drive!)
-3. Click **Flash!**
+2. Select your USB stick
+3. Click **Flash!** — done
 
-**Or use Terminal:**
-
+**Or using Terminal:**
 ```bash
-# Find your USB stick (look for the one matching its size)
+# Find your USB stick
 diskutil list
 
 # Unmount it (replace disk2 with yours)
@@ -65,6 +68,30 @@ diskutil eject /dev/disk2
 ```
 
 > ⚠️ **Double-check the disk number.** Wrong disk = wrong drive erased.
+
+#### Option B: I only have an external drive with multiple partitions
+
+If you don't have a spare USB stick and your external drive has multiple partitions, you can use **one partition** without erasing the others. No `dd`, no balenaEtcher — those erase the whole disk.
+
+```bash
+# 1. See your partitions — find the one you want to use
+diskutil list
+
+# 2. Erase ONLY that partition as FAT32 (replace disk2s4 with yours!)
+#    This ONLY touches that one partition — your other partitions are safe
+diskutil eraseVolume FAT32 UBUNTUBOOT /dev/disk2s4
+
+# 3. Mount the ISO
+hdiutil mount ubuntu-26.04-desktop-amd64-mac-edition.iso
+
+# 4. Copy the installer files to your partition
+rsync -a /Volumes/Ubuntu*/. /Volumes/UBUNTUBOOT/
+
+# 5. Unmount the ISO
+hdiutil unmount /Volumes/Ubuntu*
+```
+
+> 💡 `diskutil eraseVolume` only erases **one partition**. `dd` and balenaEtcher erase the **whole disk**. Big difference.
 
 ### Step 3: Boot from USB
 
