@@ -93,24 +93,36 @@ hdiutil unmount /Volumes/Ubuntu*
 
 > 💡 `diskutil eraseVolume` only erases **one partition**. `dd` and balenaEtcher erase the **whole disk**. Big difference.
 
-### Step 3: Boot from USB
+### Step 3: Boot into Ubuntu
 
-1. **Shut down** your Mac
-2. **Plug in** the USB stick
-3. **Turn on** while holding **Option (⌥)**
-4. Select the **EFI Boot** drive
+1. **Shut down** your Mac completely
+2. Make sure your USB stick or external drive is plugged in
+3. **Turn on** while holding **Option (⌥)** — keep holding until you see the boot menu
+4. Select the **EFI Boot** drive (orange/yellow icon)
 5. Ubuntu loads!
 
-### Step 4: Install
+### Step 4: Try Ubuntu first (recommended)
 
-1. Click **"Try Ubuntu"** first to test WiFi, keyboard, trackpad
-2. When ready, double-click **"Install Ubuntu"** on the desktop
-3. Follow the installer:
-   - Pick your language
-   - Connect to WiFi (it works!)
-   - **Installation type** — see below
-   - Set your name and password
-4. Reboot — done!
+Click **"Try Ubuntu"** — this boots into a full desktop without installing anything. Nothing on your Mac gets changed.
+
+**Test everything before you commit:**
+- **WiFi** — click the network icon, connect to your WiFi
+- **Keyboard** — type stuff, try brightness and volume keys (F1/F2, F10/F11/F12)
+- **Trackpad** — scroll, right-click, gestures
+- **Audio** — open a browser and play something
+
+If anything doesn't work, check [Troubleshooting](#-troubleshooting). When you're done, just restart — you're back in macOS, nothing changed.
+
+### Step 5: Install Ubuntu (when ready)
+
+Boot from the drive again (Step 3), but this time click **"Install Ubuntu"**.
+
+Follow the installer:
+1. Pick your language
+2. Connect to WiFi (it works!)
+3. Choose your **installation type** — see below
+4. Set your name and password
+5. Reboot — done!
 
 #### Where to install Ubuntu?
 
@@ -122,7 +134,7 @@ hdiutil unmount /Volumes/Ubuntu*
 
 > 💡 **Have an external drive with multiple partitions?** Choose "Something else" in the installer. You'll see all your partitions listed. Pick only the one you want to use, set it to ext4 and mount point `/`. The installer will **only touch that partition** — your other partitions stay untouched.
 
-### Step 5: Verify hardware
+### Step 6: Verify hardware
 
 After install, open Terminal and run:
 
