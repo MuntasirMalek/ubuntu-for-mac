@@ -37,35 +37,39 @@ curl -fsSL https://raw.githubusercontent.com/MuntasirMalek/ubuntu-for-mac/main/d
 
 That's it — it downloads everything, combines the files, and verifies the checksum for you.
 
-### Step 2: Flash to USB
+### Step 2: Flash to a USB stick
 
-**Easiest way** — use [balenaEtcher](https://etcher.balena.io/) (free):
+You need a **separate USB flash drive** (8 GB+) just for the installer. This is temporary.
+
+> ⚠️ **Flashing erases the ENTIRE USB drive.** Don't use a drive with data you need. If you have an external hard drive with multiple partitions, do NOT flash to it — use a separate USB stick instead.
+
+**Easiest way** — [balenaEtcher](https://etcher.balena.io/) (free):
 1. Open it, select the ISO
-2. Select your USB drive
+2. Select your USB **flash drive** (not your external hard drive!)
 3. Click **Flash!**
 
 **Or use Terminal:**
 
 ```bash
-# Find your USB drive
+# Find your USB stick (look for the one matching its size)
 diskutil list
 
 # Unmount it (replace disk2 with yours)
 diskutil unmountDisk /dev/disk2
 
-# Flash (replace rdisk2 with yours — the 'r' makes it faster)
+# Flash (replace rdisk2 — the 'r' makes it faster)
 sudo dd if=ubuntu-26.04-desktop-amd64-mac-edition.iso of=/dev/rdisk2 bs=4m status=progress
 
 # Eject
 diskutil eject /dev/disk2
 ```
 
-> ⚠️ **Be careful with `diskutil list`.** Pick the disk that matches your USB drive's size. Wrong disk = wrong drive erased.
+> ⚠️ **Double-check the disk number.** Wrong disk = wrong drive erased.
 
 ### Step 3: Boot from USB
 
 1. **Shut down** your Mac
-2. **Plug in** the USB drive
+2. **Plug in** the USB stick
 3. **Turn on** while holding **Option (⌥)**
 4. Select the **EFI Boot** drive
 5. Ubuntu loads!
@@ -77,9 +81,19 @@ diskutil eject /dev/disk2
 3. Follow the installer:
    - Pick your language
    - Connect to WiFi (it works!)
-   - Choose your install type (see [Dual Boot](#-dual-boot-with-macos) if keeping macOS)
+   - **Installation type** — see below
    - Set your name and password
-4. Reboot — done! 🎉
+4. Reboot — done!
+
+#### Where to install Ubuntu?
+
+| Situation | What to choose |
+|-----------|---------------|
+| **Erase everything, Ubuntu only** | Choose "Erase disk and install Ubuntu" |
+| **Keep macOS (dual boot)** | Choose "Something else" — see [Dual Boot](#-dual-boot-with-macos) |
+| **Install to a specific partition** | Choose "Something else" — select your partition, format as ext4, set mount point to `/` |
+
+> 💡 **Have an external drive with multiple partitions?** Choose "Something else" in the installer. You'll see all your partitions listed. Pick only the one you want to use, set it to ext4 and mount point `/`. The installer will **only touch that partition** — your other partitions stay untouched.
 
 ### Step 5: Verify hardware
 
